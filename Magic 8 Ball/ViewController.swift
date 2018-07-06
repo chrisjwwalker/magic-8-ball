@@ -7,19 +7,33 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var magicEightBall: UIImageView!
+    
+    @IBAction func askButton(_ sender: Any) {
+        shakeEightBall()
+    }
+    
+    func shakeEightBall() {
+        let selectedBall = Int(arc4random_uniform(5)) + 1
+        magicEightBall.image = UIImage(named: "ball\(selectedBall)")
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        shakeEightBall()
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        shakeEightBall()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
-
 }
 
